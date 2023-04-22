@@ -7,13 +7,19 @@ class DatabaseInitializer
     public function initialize(DBConnection $db): void
     {
         $this->db = $db;
-        $this->createTable_cash_register();
-        $this->createTable_revenues();
+        if (!$this->createTable_cash_register($db->getDatabase())){
+            echo "Error while trying to create table tbl_cash-register<br>";
+        }
+        if (!$this->createTable_revenues($db->getDatabase())){
+            echo "Error while trying to create table tbl_revenues<br>";
+        }
     }
 
-    private function createTable_cash_register(): int|false
+    private function createTable_cash_register(string $dbName): int|false
     {
-        return $this->db->exec("
+        try {
+            return $this->db->exec("
+            USE `$dbName`;
             CREATE TABLE `tbl_cash-register` 
             (
                 `id_cash-register` int(11) NOT NULL AUTO_INCREMENT,
@@ -22,11 +28,17 @@ class DatabaseInitializer
             ) 
             ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ");
+        } catch (PDOException) {
+            return false;
+        }
+
     }
 
-    private function createTable_revenues(): int|false
+    private function createTable_revenues(string $dbName): int|false
     {
-        return $this->db->exec("
+        try {
+            return $this->db->exec("
+            USE `$dbName`;
             CREATE TABLE `tbl_revenues` 
             (
               `id_revenue` int(11) NOT NULL AUTO_INCREMENT,
@@ -40,5 +52,9 @@ class DatabaseInitializer
             ) 
             ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ");
+
+        } catch (PDOException) {
+            return false;
+        }
     }
 }

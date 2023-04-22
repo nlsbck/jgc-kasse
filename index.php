@@ -4,6 +4,7 @@ use Slim\Views\PhpRenderer;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 include 'classes/db/DBConnection.php';
+include 'classes/db/DatabaseInitializer.php';
 
 require __DIR__ . '/vendor/autoload.php';
 require './config/database.php';
@@ -19,9 +20,10 @@ $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 //$app->addErrorMiddleware(false,false, false);
 
-$app->get('/', function ($request, $response, $args) {
-
-    phpinfo();
+$app->get('/init', function ($request, $response, $args) {
+    global  $db;
+    $dbi = new DatabaseInitializer();
+    $dbi->initialize($db);
     exit;
 })->setName('phpinfo');
 

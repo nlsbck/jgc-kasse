@@ -6,7 +6,7 @@ class DBConnection
     private $connection;
     public function __construct(string $server, string $database, string $user, string $password)
     {
-        $this->database = $database;
+        $this->setDatabase($database);
         try {
             $this->connection = new PDO("mysql:host=$server;db=$database", $user, $password);
             // set the PDO error mode to exception
@@ -38,4 +38,22 @@ class DBConnection
     {
         return $this->connection->exec($sql);
     }
+
+    /**
+     * @return string
+     */
+    public function getDatabase(): string
+    {
+        return $this->database;
+    }
+
+    /**
+     * @param string $database
+     */
+    public function setDatabase(string $database): void
+    {
+        $this->database = $database;
+    }
+
+
 }
