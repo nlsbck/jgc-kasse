@@ -2,9 +2,12 @@
 
 global $app;
 
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
+
 $app->get('/init', function ($request, $response, $args) {
     global  $db;
-    $dbi = new DatabaseInitializer();
+    $dbi = new DBInitializer();
     $dbi->initialize($db);
     exit;
 })->setName('phpinfo');

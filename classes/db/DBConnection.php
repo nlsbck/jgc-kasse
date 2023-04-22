@@ -11,6 +11,7 @@ class DBConnection
             $this->connection = new PDO("mysql:host=$server;db=$database", $user, $password);
             // set the PDO error mode to exception
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->exec("USE `$database`");
         } catch (PDOException $e) {
             echo "Connections to Database failed.";
             echo $e;
@@ -26,12 +27,7 @@ class DBConnection
     {
         $stmt = $this->connection->prepare($query);
         $stmt->execute($parameters);
-        $fetched = $stmt->fetchAll();
-        $tables = array();
-        foreach ($fetched as $item) {
-            $tables[] = $item[0];
-        }
-        return $tables;
+        return $stmt->fetchAll();
     }
 
     public function exec($sql): int|false
