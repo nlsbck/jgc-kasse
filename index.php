@@ -26,8 +26,7 @@ $app->addErrorMiddleware(true, true, true);
 require './routes/api.php';
 require './routes/pages.php';
 
-
-
+define('ROUTES', $app->getRouteCollector());
 
 
 $app->run();

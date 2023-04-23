@@ -2,8 +2,8 @@
 
 class DBConnection
 {
-    private $database;
-    private $connection;
+    private string $database;
+    private PDO $connection;
     public function __construct(string $server, string $database, string $user, string $password)
     {
         $this->setDatabase($database);
@@ -16,6 +16,28 @@ class DBConnection
             echo "Connections to Database failed.";
             echo $e;
         }
+    }
+
+    public function insert(string $table, array $columnValuePairs): bool
+    {
+        $placeholders = array();
+        foreach ($columnValuePairs as $ignored) {
+            $placeholders[] = '?';
+        }
+        $sql = "INSERT INTO " . $table . " (" . implode(', ', array_keys($columnValuePairs)) . ") VALUES (". implode(", ",$placeholders) . ")";
+        $stmt = $this->connection->prepare($sql);
+        return $stmt->execute(array_values($columnValuePairs));
+    }
+
+    public function delete(string $table, array $whereColumnValuePairs)
+    {
+        $columns = array_keys($whereColumnValuePairs);
+        for ($i = 0; $i < count($whereColumnValuePairs); $i++){
+            $columns[$i] .= " = ?";
+        }
+        $sql = "DELETE FROM " . $table . " WHERE " . implode(" AND ", $columns);
+        $stmt = $this->connection->prepare($sql);
+        return $stmt->execute(array_values($whereColumnValuePairs));
     }
 
     public function get_tables(): array
@@ -50,6 +72,8 @@ class DBConnection
     {
         $this->database = $database;
     }
+
+
 
 
 }

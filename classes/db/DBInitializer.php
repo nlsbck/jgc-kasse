@@ -7,7 +7,7 @@ class DBInitializer
     public function initialize(DBConnection $db): void
     {
         $this->db = $db;
-        if (!$this->createTable_cash_register($db->getDatabase())) {
+        if (!$this->createTable_cash_registers($db->getDatabase())) {
             echo "Error while trying to create table tbl_cash_register<br>";
         }
         if (!$this->createTable_tax_rate($db->getDatabase())) {
@@ -21,12 +21,12 @@ class DBInitializer
         }
     }
 
-    private function createTable_cash_register(string $dbName): int|false
+    private function createTable_cash_registers(string $dbName): int|false
     {
         try {
             return $this->db->exec("
             USE `$dbName`;
-            CREATE TABLE `tbl_cash_register` 
+            CREATE TABLE `tbl_cash_registers` 
             (
                 `id_cash_register` int(11) NOT NULL AUTO_INCREMENT,
                 `description` int(11) DEFAULT NULL,

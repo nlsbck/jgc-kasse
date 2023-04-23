@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col">
                 <i class="fa-solid fa-cash-register fa-2xl"></i>
-                <a href="<?=WDU?>/cash-register">Neue Kasse anlegen</a>
+                <a href="<?=WDU?>/cash-registers">Kassen verwalten</a>
             </div>
         </div>
     </div>
