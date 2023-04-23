@@ -25,6 +25,7 @@ class DBConnection
             $placeholders[] = '?';
         }
         $sql = "INSERT INTO " . $table . " (" . implode(', ', array_keys($columnValuePairs)) . ") VALUES (". implode(", ",$placeholders) . ")";
+
         $stmt = $this->connection->prepare($sql);
         return $stmt->execute(array_values($columnValuePairs));
     }
@@ -32,14 +33,14 @@ class DBConnection
     public function update(string $table, array $columnValuePairs, array $whereColumnValuePairs): bool
     {
         $set_expressions = array();
+        foreach ($columnValuePairs as $column => $value){
+            $set_expressions[] = $column . " = " . "'" . $value . "'";
+        }
         $where_columns = array_keys($whereColumnValuePairs);
         for ($i = 0; $i < count($whereColumnValuePairs); $i++){
             $where_columns[$i] .= " = ?";
         }
-        foreach ($columnValuePairs as $column => $value){
-            $set_expressions[] = $column . " = " . $value;
-        }
-        $sql = "UPDATE " . $table . "SET " . implode(", ", $set_expressions) . " WHERE " . implode(" AND ", $where_columns);
+        $sql = "UPDATE " . $table . " SET " . implode(", ", $set_expressions) . " WHERE " . implode(" AND ", $where_columns);
         $stmt = $this->connection->prepare($sql);
         return $stmt->execute(array_values($whereColumnValuePairs));
     }

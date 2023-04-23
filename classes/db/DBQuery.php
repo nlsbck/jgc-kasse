@@ -76,7 +76,7 @@ class DBQuery
         if ($id_cash_status === '') {
             return $db->insert('tbl_cash_status', array("date" => $date, "amount" => $amount, "fk_cash_register" => $id_cash_register));
         } else {
-            return $db->update('tbl_cash_status', array("date" => $date, "amount" => $amount), array("id_cash_status", $id_cash_status));
+            return $db->update('tbl_cash_status', array("date" => $date, "amount" => $amount), array("id_cash_status" => $id_cash_status));
         }
     }
 

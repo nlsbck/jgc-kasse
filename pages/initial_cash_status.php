@@ -94,10 +94,13 @@ require 'pages/include/head.php';
         let amount_input = document.getElementById('amount-input' + id_cash_register);
         let id_cash_status_input = document.getElementById('id_cash_status' + id_cash_register);
         if (validateInputs(date_input) & validateCashAmount(amount_input)) {
+            let date_ger = date_input.value;
+            let date_new = date_ger.substring(0, 4) + "-" + date_ger.substring(5, 7)+ "-" + date_ger.substring(8)
+
             let postData = {
                 id_cash_status: id_cash_status_input.value,
                 id_cash_register: id_cash_register,
-                date: date_input.value,
+                date: date_new,
                 amount: amount_input.value
             }
             $.ajax({
@@ -105,7 +108,7 @@ require 'pages/include/head.php';
                 url: '<?= URI->getURI('edit-cash-status')?>',
                 data: {postData: postData},
                 success: function () {
-
+                   location.reload();
                 }
             })
         }
