@@ -25,7 +25,7 @@
             <label for="date-input" class="form-label">Datum</label>
             <input class="form-control" id="date-input" type="date">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <label for="description-input" class="form-label">Beschreibung</label>
             <input class="form-control" id="description-input" placeholder="Beschreibung">
         </div>
@@ -44,6 +44,7 @@
     </div>
     <br>
     <div class="row">
+        <div class="col-md-11"></div>
         <div class="col-md-1">
             <button class="btn btn-success" onclick="createRevenue()" style="width: 100%">Anlegen</button>
         </div>
@@ -51,7 +52,6 @@
     <br>
     <br>
     <div class="row">
-
         <div class="col-md-12">
             <table class="table">
                 <thead>
@@ -76,7 +76,6 @@
                             <i class="fa-solid fa-trash-can"></i>
                         </td>
                     </tr>
-
                 <?php endforeach ?>
                 </tbody>
             </table>

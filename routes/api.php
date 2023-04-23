@@ -22,6 +22,13 @@ $app->group('/api', function (RouteCollectorProxy $api) {
             $response->getBody()->write(json_encode(array("success" => true)));
             return $response;
         })->setName('delete-cash-register');
+
+        $cr_api->post('/edit-cash-status', function (Request $request, Response $response, $args){
+            $data = $request->getParsedBody()['postData'];
+            DBQuery::edit_initial_cash_status($data['id_cash_status'],$data['date'], $data['amount'], $data['id_cash_register']);
+            $response->getBody()->write(json_encode(array("success" => true)));
+            return $response;
+        })->setName('edit-cash-status');
     });
 
     $api->group('/revenue', function (RouteCollectorProxy $revenue_api){

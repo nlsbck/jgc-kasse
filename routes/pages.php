@@ -6,14 +6,6 @@ use Slim\Views\PhpRenderer;
 
 $renderer = new PhpRenderer('./pages/');
 
-
-
-$app->get('/hello/{name}', function ($request, $response, $args) {
-
-    $renderer = new PhpRenderer('./pages/');
-    return $renderer->render($response, "hello.php", $args);
-})->setName('hello');
-
 $app->get('/', function ($request, $response, $args) {
     global $renderer;
 
@@ -33,3 +25,9 @@ $app->get('/revenues', function ($request, $response, $args){
     $args['revenues'] = DBQuery::get_revenues_last10();
     return $renderer->render($response, "revenues.php", $args);
 })->setName('revenues');
+
+$app->get('/initial_cash_status', function ($request, $response, $args){
+    global $renderer;
+    $args['initial_cash_status'] = DBQuery::initial_cash_status();
+    return $renderer->render($response, "initial_cash_status.php", $args);
+})->setName('initial_cash_status');

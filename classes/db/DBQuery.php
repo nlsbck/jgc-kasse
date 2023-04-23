@@ -58,4 +58,26 @@ class DBQuery
             FROM tbl_tax_rate
         ");
     }
+
+    public static function initial_cash_status(): array
+    {
+        global $db;
+        return $db->executeSelect("
+            SELECT cs.id_cash_status, MIN(cs.date) AS date, cs.amount, cr.id_cash_register, cr.description AS cash_register
+            FROM tbl_cash_status cs
+            RIGHT JOIN tbl_cash_registers cr ON cr.id_cash_register = cs.fk_cash_register
+            GROUP BY id_cash_register
+        ");
+    }
+
+    public static function edit_initial_cash_status($id_cash_status, $date, $amount, $id_cash_register = '-1'): bool
+    {
+        global $db;
+        if ($id_cash_status === '') {
+            return $db->insert('tbl_cash_status', array("date" => $date, "amount" => $amount, "fk_cash_register" => $id_cash_register));
+        } else {
+            return $db->update('tbl_cash_status', array("date" => $date, "amount" => $amount), array("id_cash_status", $id_cash_status));
+        }
+    }
+
 }

@@ -29,7 +29,22 @@ class DBConnection
         return $stmt->execute(array_values($columnValuePairs));
     }
 
-    public function delete(string $table, array $whereColumnValuePairs)
+    public function update(string $table, array $columnValuePairs, array $whereColumnValuePairs): bool
+    {
+        $set_expressions = array();
+        $where_columns = array_keys($whereColumnValuePairs);
+        for ($i = 0; $i < count($whereColumnValuePairs); $i++){
+            $where_columns[$i] .= " = ?";
+        }
+        foreach ($columnValuePairs as $column => $value){
+            $set_expressions[] = $column . " = " . $value;
+        }
+        $sql = "UPDATE " . $table . "SET " . implode(", ", $set_expressions) . " WHERE " . implode(" AND ", $where_columns);
+        $stmt = $this->connection->prepare($sql);
+        return $stmt->execute(array_values($whereColumnValuePairs));
+    }
+
+    public function delete(string $table, array $whereColumnValuePairs): bool
     {
         $columns = array_keys($whereColumnValuePairs);
         for ($i = 0; $i < count($whereColumnValuePairs); $i++){
