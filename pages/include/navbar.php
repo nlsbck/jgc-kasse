@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= URI->getURI('cash-registers') ?>">Kassen</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= URI->getURI('revenues') ?>">Umsätze</a>
+                </li>
             </ul>
         </div>
     </div>

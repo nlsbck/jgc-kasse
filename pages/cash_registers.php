@@ -57,7 +57,7 @@ require 'pages/include/head.php';
                 method: 'POST',
                 url: '<?= URI->getURI("new-cash-register")?>',
                 data: {description: cash_register_input.value},
-                success: function (result) {
+                success: function () {
                     cash_register_input.value = ''
                     location.reload();
                 },
