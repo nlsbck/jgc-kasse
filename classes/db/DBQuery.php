@@ -27,9 +27,12 @@ class DBQuery
     {
         global $db;
         return $db->executeSelect("
-            SELECT * 
-            FROM tbl_revenues
-            ORDER BY date desc
+            SELECT r.id_revenue, r.description, r.date, r.amount, r.fk_cash_register, r.fk_tax_rate,
+                tcr.description AS cash_register, ttr.description AS tax, ttr.tax_rate
+            FROM tbl_revenues r
+            JOIN tbl_cash_registers tcr ON r.fk_cash_register = tcr.id_cash_register
+            JOIN tbl_tax_rate ttr ON r.fk_tax_rate = ttr.id_tax_rate
+            ORDER BY r.id_revenue DESC
             LIMIT 10
         ");
     }

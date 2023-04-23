@@ -11,10 +11,24 @@
                     <a class="nav-link" href="<?= URI->getURI('home') ?>">Start</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= URI->getURI('cash-registers') ?>">Kassen</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="<?= URI->getURI('revenues') ?>">Umsätze</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Datenpflege
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="<?= URI->getURI('cash-registers') ?>">Kassen</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Initialer Kassenstand</a></li>
+                        <li>
+                        <li>
+                            <a class="dropdown-item" href="#">Steuersätze</a></li>
+                        <li>
+                    </ul>
                 </li>
             </ul>
         </div>

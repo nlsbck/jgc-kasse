@@ -21,7 +21,22 @@ $app->group('/api', function (RouteCollectorProxy $api) {
             DBQuery::delete_cash_register($id_cash_register);
             $response->getBody()->write(json_encode(array("success" => true)));
             return $response;
-        })->setName('delete-cash-register');;
+        })->setName('delete-cash-register');
+    });
+
+    $api->group('/revenue', function (RouteCollectorProxy $revenue_api){
+        $revenue_api->post('/new-revenue', function (Request $request, Response $response, $args) {
+            $data = $request->getParsedBody()['postData'];
+            DBQuery::create_revenue($data['description'], $data['date'],  $data['amount'],$data['id_cash_register'], $data['id_tax_rate']);
+            $response->getBody()->write(json_encode(array("success" => true)));
+            return $response;
+        })->setName('new-revenue');
+        $revenue_api->post('/delete-revenue', function (Request $request, Response $response, $args){
+            $id_revenue = $request->getParsedBody()['id_revenue'];
+            DBQuery::delete_revenue($id_revenue);
+            $response->getBody()->write(json_encode(array("success" => true)));
+            return $response;
+        })->setName('delete-revenue');
     });
 
     $api->get('/db-init', function () {
@@ -29,20 +44,12 @@ $app->group('/api', function (RouteCollectorProxy $api) {
         $dbi = new DBInitializer();
         $dbi->initialize($db);
         exit;
-    })->setName('phpinfo');
+    })->setName('db-init');
 
     $api->get('/tables', function (Request $request, Response $response, $args) {
         global $db;
         $response->getBody()->write(json_encode($db->get_tables()));
         return $response;
     })->setName('tables');
-
-
-
-    $api->post('/example', function (Request $request, Response $response, $args){
-        $response->getBody()->write(json_encode($request->getParsedBody()));
-        return $response;
-    });
-
 });
 

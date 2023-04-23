@@ -12,7 +12,7 @@ require 'pages/include/head.php';
         <div class="col-md-4"></div>
         <div class="col-md-3">
             <label for="cash-register-input"></label>
-            <input class="form-control" id="cash-register-input" placeholder="Name der Kasse">
+            <input class="form-control" id="cash-register-input" placeholder="Name der neuen Kasse">
         </div>
         <div class="col-md-1">
             <button class="btn btn-success" onclick="createCashRegister()" style="width: 100%">Anlegen</button>

@@ -51,20 +51,28 @@
     <br>
     <br>
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+
+        <div class="col-md-12">
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Vorhandene Umsätze</th>
+                    <th scope="col">Kasse</th>
+                    <th scope="col">Datum</th>
+                    <th scope="col">Beschreibung</th>
+                    <th scope="col">Betrag</th>
+                    <th scope="col">Steuer</th>
                     <th class="center" scope="col">Löschen</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($revenues as $revenue): ?>
                     <tr>
+                        <td><?= $revenue['cash_register'] ?></td>
+                        <td><?= date('d.m.Y', strtotime($revenue['date'])) ?></td>
                         <td><?= $revenue['description'] ?></td>
-                        <td class="center clickable" onclick="deleteRevenue('<?= $revenue['id_cash_register']?>')">
+                        <td style="text-align: right"><?= $revenue['amount'] ?> €</td>
+                        <td><?= $revenue['tax'] ?></td>
+                        <td class="center clickable" onclick="deleteRevenue('<?= $revenue['id_revenue']?>')">
                             <i class="fa-solid fa-trash-can"></i>
                         </td>
                     </tr>
@@ -79,6 +87,7 @@
 </body>
 <script src="../js/validateInputs.js"></script>
 <script>
+    document.getElementById('date-input').value = new Date().toJSON().slice(0,10);
     function createRevenue() {
 
         let cash_register_select = document.getElementById('cash-register-select');
@@ -88,12 +97,21 @@
         let tax_rate_select = document.getElementById('tax-rate-select');
         console.log(date_input.value)
         if (validateInputs(cash_register_select, date_input, description_input, tax_rate_select) & validateCashAmount(amount_input)) {
+            let postData = {
+                id_cash_register: cash_register_select.value,
+                date: date_input.value,
+                description: description_input.value,
+                amount: amount_input.value,
+                id_tax_rate: tax_rate_select.value,
+            }
             $.ajax({
                 method: 'POST',
-                url: '',
-                data: {description: cash_register_input.value},
+                url: '<?= URI->getURI("new-revenue")?>',
+                data: {postData: postData},
                 success: function () {
-                    cash_register_input.value = ''
+                    date_input.value = '';
+                    description_input.value = '';
+                    amount_input.value = '';
                     location.reload();
                 },
                 error: function (e) {
@@ -103,11 +121,11 @@
         }
     }
 
-    function deleteRevenue(id_cash_register) {
+    function deleteRevenue(id_revenue) {
         $.ajax({
             method: 'POST',
-            url: '',
-            data: {id_cash_register: id_cash_register},
+            url: '<?= URI->getURI("delete-revenue")?>',
+            data: {id_revenue: id_revenue},
             success: function (){
                 location.reload();
             }

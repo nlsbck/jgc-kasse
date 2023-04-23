@@ -13,7 +13,7 @@ function validateInputs(...inputs) {
 }
 
 function validateCashAmount(...inputs) {
-    let regex = /^[0-9]*(\.[0-9]{0,2})?$/;
+    let regex = /^-?[0-9]*(\.[0-9]{1,2})?$/;
     let isAllValid = true;
     inputs.forEach(input => {
         input.classList.add('is-valid');
