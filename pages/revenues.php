@@ -29,11 +29,11 @@
             <label for="description-input" class="form-label">Beschreibung</label>
             <input class="form-control" id="description-input" placeholder="Beschreibung">
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <label for="amount-input" class="form-label">Betrag</label>
             <input class="form-control" id="amount-input" value="0.00" type="number" step='0.01'>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="tax-rate-select" class="form-label">Steuer</label>
             <select class="form-select" id="tax-rate-select">
                 <?php foreach ($tax_rates as $tax_rate): ?>
@@ -80,8 +80,14 @@
 <script src="../js/validateInputs.js"></script>
 <script>
     function createRevenue() {
-        let cash_register_input = document.getElementById('cash-register-input');
-        if (validateInputs(cash_register_input)) {
+
+        let cash_register_select = document.getElementById('cash-register-select');
+        let date_input = document.getElementById('date-input');
+        let description_input = document.getElementById('description-input');
+        let amount_input = document.getElementById('amount-input');
+        let tax_rate_select = document.getElementById('tax-rate-select');
+        console.log(date_input.value)
+        if (validateInputs(cash_register_select, date_input, description_input, tax_rate_select) & validateCashAmount(amount_input)) {
             $.ajax({
                 method: 'POST',
                 url: '',
@@ -98,7 +104,6 @@
     }
 
     function deleteRevenue(id_cash_register) {
-        console.log(id_cash_register);
         $.ajax({
             method: 'POST',
             url: '',
