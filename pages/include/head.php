@@ -9,3 +9,6 @@
 require 'pages/include/bootstrap.php';
 require 'pages/include/fontawesome.php';
 require 'pages/include/jQuery.php';
+
+
+require 'pages/include/navbar.php';

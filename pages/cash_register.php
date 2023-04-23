@@ -1,8 +1,8 @@
 <?php /** @var array $cash_registers */ ?>
 <head>
-    <?php
-    require 'pages/include/head.php';
-    ?>
+<?php
+require 'pages/include/head.php';
+?>
 </head>
 <body>
 <h1 style="text-align: center">Kassen</h1>
@@ -55,7 +55,7 @@
         if (validateInputs(cash_register_input)) {
             $.ajax({
                 method: 'POST',
-                url: '<?= WDU . ROUTES->getNamedRoute("new-cash-register")->getPattern()?>',
+                url: '<?= URI->getURI("new-cash-register")?>',
                 data: {description: cash_register_input.value},
                 success: function (result) {
                     cash_register_input.value = ''
@@ -72,7 +72,7 @@
         console.log(id_cash_register);
         $.ajax({
             method: 'POST',
-            url: '<?= WDU . ROUTES->getNamedRoute("delete-cash-register")->getPattern()?>',
+            url: '<?= URI->getURI("delete-cash-register")?>',
             data: {id_cash_register: id_cash_register},
             success: function (){
                 location.reload();
@@ -80,5 +80,3 @@
         })
     }
 </script>
-
-

@@ -1,4 +1,6 @@
 <?php
+
+
 use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -6,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 include 'classes/db/DBConnection.php';
 include 'classes/db/DBInitializer.php';
 include 'classes/db/DBQuery.php';
+include 'classes/routing/URI.php';
 
 require __DIR__ . '/vendor/autoload.php';
 require './config/database.php';
@@ -27,6 +30,7 @@ require './routes/api.php';
 require './routes/pages.php';
 
 define('ROUTES', $app->getRouteCollector());
+define("URI", new URI($app->getRouteCollector()));
 
 
 $app->run();

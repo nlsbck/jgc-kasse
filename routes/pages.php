@@ -24,4 +24,4 @@ $app->get('/cash-registers', function ($request, $response, $args){
     global $renderer;
     $args['cash_registers'] = DBQuery::get_cash_registers();
     return $renderer->render($response, "cash_register.php", $args);
-});
+})->setName('cash-registers');
