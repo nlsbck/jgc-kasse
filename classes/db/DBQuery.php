@@ -99,7 +99,27 @@ class DBQuery
             SELECT COUNT(id_revenue) AS count
             FROM tbl_revenues
             where fk_tax_rate = ?
-        ", array($id_tax_rate))[0]['count'];
+        ", $id_tax_rate)[0]['count'];
+    }
+
+    public static function get_yearly_overview($year): array
+    {
+        global $db;
+        return $db->executeSelect("
+            SELECT r.id_revenue, cr.description AS cash_register,
+               r.description AS revenue, r.date, r.amount,
+               tr.description AS tax, amount*tr.tax_rate AS tax_to_pay,
+               tr.tax_rate,
+               SUM(amount) OVER (PARTITION BY MONTH(date), YEAR(date)) AS sum_month,
+               SUM(amount) OVER (PARTITION BY YEAR(date)) AS sum_year,
+               SUM(amount*tr.tax_rate) OVER (PARTITION BY MONTH(date), YEAR(date)) AS tax_to_pay_month,
+               SUM(amount*tr.tax_rate) OVER (PARTITION BY YEAR(date)) AS tax_to_pay_year
+            FROM tbl_revenues r
+            join tbl_cash_registers cr on r.fk_cash_register = cr.id_cash_register
+            join tbl_tax_rates tr on tr.id_tax_rate = r.fk_tax_rate
+            WHERE YEAR(r.date) = ?
+            ORDER BY date
+        ", $year);
     }
 
 }

@@ -61,7 +61,7 @@ class DBConnection
         return $this->executeSelect("SELECT table_name FROM information_schema.tables WHERE TABLE_SCHEMA = ?", [$this->database]);
     }
 
-    public function executeSelect(string $query, array $parameters = []): array
+    public function executeSelect(string $query, ...$parameters): array
     {
         $stmt = $this->connection->prepare($query);
         $stmt->execute($parameters);

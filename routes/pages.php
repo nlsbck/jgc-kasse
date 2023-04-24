@@ -8,7 +8,7 @@ $renderer = new PhpRenderer('./pages/');
 
 $app->get('/', function ($request, $response, $args) {
     global $renderer;
-
+    $args['yearly_overview'] = DBQuery::get_yearly_overview('2023');
     return $renderer->render($response, ".php", $args);
 })->setName('home');
 

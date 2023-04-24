@@ -87,6 +87,7 @@
             url: '<?= URI->getURI("delete-tax-rate")?>',
             data: {id_tax_rate: id_tax_rate},
             success: function (response){
+                response = JSON.parse(response);
                 if (response['success']) {
                     location.reload();
                 }

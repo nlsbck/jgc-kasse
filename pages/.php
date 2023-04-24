@@ -1,3 +1,4 @@
+<?php /** @var array $yearly_overview */ ?>
 <head>
     <?php
     require 'pages/include/head.php';
@@ -9,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-
+                <?php var_dump($yearly_overview);?>
             </div>
         </div>
     </div>
