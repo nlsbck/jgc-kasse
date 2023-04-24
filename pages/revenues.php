@@ -70,7 +70,7 @@
                         <td><?= $revenue['cash_register'] ?></td>
                         <td><?= date('d.m.Y', strtotime($revenue['date'])) ?></td>
                         <td><?= $revenue['description'] ?></td>
-                        <td style="text-align: right"><?= $revenue['amount'] ?> €</td>
+                        <td class="currency"><?= $revenue['amount'] ?> €</td>
                         <td><?= $revenue['tax'] ?></td>
                         <td class="center clickable" onclick="deleteRevenue('<?= $revenue['id_revenue']?>')">
                             <i class="fa-solid fa-trash-can"></i>

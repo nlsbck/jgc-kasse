@@ -4,3 +4,6 @@ th.center, td.center {
 .clickable {
     cursor: pointer;
 }
+td.currency {
+    text-align: right;
+}
