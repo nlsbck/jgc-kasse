@@ -23,10 +23,10 @@
                             <a class="dropdown-item" href="<?= URI->getURI('cash-registers') ?>">Kassen</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="<?= URI->getURI('initial_cash_status') ?>">Initialer Kassenstand</a></li>
+                            <a class="dropdown-item" href="<?= URI->getURI('initial-cash-status') ?>">Initialer Kassenstand</a></li>
                         <li>
                         <li>
-                            <a class="dropdown-item" href="#">Steuersätze</a></li>
+                            <a class="dropdown-item" href="<?= URI->getURI('tax-rates') ?>">Steuersätze</a></li>
                         <li>
                     </ul>
                 </li>

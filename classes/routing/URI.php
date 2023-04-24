@@ -17,7 +17,12 @@ class URI
         if (is_null($name)) {
             return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         }
-        return (empty($_SERVER['HTTPS']) ? 'http' : 'https'). "://$_SERVER[HTTP_HOST]" . $this->routeCollector->getNamedRoute($name)->getPattern();
+        try {
+            return (empty($_SERVER['HTTPS']) ? 'http' : 'https'). "://$_SERVER[HTTP_HOST]" . $this->routeCollector->getNamedRoute($name)->getPattern();
+        } catch (RuntimeException) {
+            return '';
+        }
+
     }
 
     /**
@@ -25,6 +30,7 @@ class URI
      */
     private function setRouteCollector(RouteCollectorInterface $routeCollector): void
     {
+
         $this->routeCollector = $routeCollector;
     }
 }

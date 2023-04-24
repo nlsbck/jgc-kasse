@@ -31,7 +31,7 @@ class DBQuery
                 tcr.description AS cash_register, ttr.description AS tax, ttr.tax_rate
             FROM tbl_revenues r
             JOIN tbl_cash_registers tcr ON r.fk_cash_register = tcr.id_cash_register
-            JOIN tbl_tax_rate ttr ON r.fk_tax_rate = ttr.id_tax_rate
+            JOIN tbl_tax_rates ttr ON r.fk_tax_rate = ttr.id_tax_rate
             ORDER BY r.id_revenue DESC
             LIMIT 10
         ");
@@ -55,8 +55,20 @@ class DBQuery
         global $db;
         return $db->executeSelect("
             SELECT * 
-            FROM tbl_tax_rate
+            FROM tbl_tax_rates
         ");
+    }
+
+    public static function create_tax_rate($tax_rate, $description): bool
+    {
+        global $db;
+        return $db->insert('tbl_tax_rates', array("tax_rate" => $tax_rate, "description" => $description));
+    }
+
+    public  static function delete_tax_rate($id_tax_rate): bool
+    {
+        global $db;
+        return $db->delete('tbl_tax_rates', array('id_tax_rate' => $id_tax_rate));
     }
 
     public static function initial_cash_status(): array
@@ -78,6 +90,16 @@ class DBQuery
         } else {
             return $db->update('tbl_cash_status', array("date" => $date, "amount" => $amount), array("id_cash_status" => $id_cash_status));
         }
+    }
+
+    public static function get_revenues_with_tax_rate($id_tax_rate): int
+    {
+        global $db;
+        return $db->executeSelect("
+            SELECT COUNT(id_revenue) AS count
+            FROM tbl_revenues
+            where fk_tax_rate = ?
+        ", array($id_tax_rate))[0]['count'];
     }
 
 }

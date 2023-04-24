@@ -26,8 +26,15 @@ $app->get('/revenues', function ($request, $response, $args){
     return $renderer->render($response, "revenues.php", $args);
 })->setName('revenues');
 
-$app->get('/initial_cash_status', function ($request, $response, $args){
+$app->get('/initial-cash-status', function ($request, $response, $args){
     global $renderer;
     $args['initial_cash_status'] = DBQuery::initial_cash_status();
     return $renderer->render($response, "initial_cash_status.php", $args);
-})->setName('initial_cash_status');
+})->setName('initial-cash-status');
+
+$app->get('/tax-rates', function ($request, $response, $args){
+    global $renderer;
+    $args['tax_rates'] = DBQuery::get_tax_rates();
+    //$args['initial_cash_status'] = DBQuery::initial_cash_status();
+    return $renderer->render($response, "tax_rates.php", $args);
+})->setName('tax-rates');
