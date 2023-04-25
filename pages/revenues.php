@@ -13,6 +13,19 @@
 <br>
 <div class="container">
     <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 text-center">
+            <div class="btn-group" role="group" aria-label="Select type">
+                <input type="radio" class="btn-check" name="btn" id="btn_expense" autocomplete="off" checked>
+                <label class="btn btn-outline-danger" for="btn_expense">Ausgabe</label>
+
+                <input type="radio" class="btn-check" name="btn" id="btn_revenue" autocomplete="off">
+                <label class="btn btn-outline-success" for="btn_revenue">Einnahme</label>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
         <div class="col-md-2">
             <label for="cash-register-select" class="form-label">Kasse</label>
             <select class="form-select" id="cash-register-select">
@@ -31,7 +44,7 @@
         </div>
         <div class="col-md-2">
             <label for="amount-input" class="form-label">Betrag</label>
-            <input class="form-control" id="amount-input" value="0.00" type="number" step='0.01'>
+            <input class="form-control" id="amount-input" value="0.00" type="number" step='0.01' min="0">
         </div>
         <div class="col-md-2">
             <label for="tax-rate-select" class="form-label">Steuer</label>
@@ -86,15 +99,16 @@
 </body>
 <script src="../js/validateInputs.js"></script>
 <script>
+
     document.getElementById('date-input').value = new Date().toJSON().slice(0,10);
     function createRevenue() {
+        console.log(document.getElementById('btn_revenue').checked);
 
         let cash_register_select = document.getElementById('cash-register-select');
         let date_input = document.getElementById('date-input');
         let description_input = document.getElementById('description-input');
         let amount_input = document.getElementById('amount-input');
         let tax_rate_select = document.getElementById('tax-rate-select');
-        console.log(date_input.value)
         if (validateInputs(cash_register_select, date_input, description_input, tax_rate_select) & validateCashAmount(amount_input)) {
             let postData = {
                 id_cash_register: cash_register_select.value,
@@ -103,20 +117,38 @@
                 amount: amount_input.value,
                 id_tax_rate: tax_rate_select.value,
             }
-            $.ajax({
-                method: 'POST',
-                url: '<?= URI->getURI("new-revenue")?>',
-                data: {postData: postData},
-                success: function () {
-                    date_input.value = '';
-                    description_input.value = '';
-                    amount_input.value = '';
-                    location.reload();
-                },
-                error: function (e) {
+            if (document.getElementById('btn_revenue').checked) {
+                $.ajax({
+                    method: 'POST',
+                    url: '<?= URI->getURI("new-revenue")?>',
+                    data: {postData: postData},
+                    success: function () {
+                        date_input.value = '';
+                        description_input.value = '';
+                        amount_input.value = '';
+                        location.reload();
+                    },
+                    error: function (e) {
 
-                }
-            });
+                    }
+                });
+            } else {
+                $.ajax({
+                    method: 'POST',
+                    url: '<?= URI->getURI("new-expense")?>',
+                    data: {postData: postData},
+                    success: function () {
+                        date_input.value = '';
+                        description_input.value = '';
+                        amount_input.value = '';
+                        location.reload();
+                    },
+                    error: function (e) {
+
+                    }
+                });
+            }
+
         }
     }
 
