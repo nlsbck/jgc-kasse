@@ -43,11 +43,23 @@ class DBQuery
         return $db->insert('tbl_revenues', array("description" => $description, "date" => $date,
             "amount" => $amount, "fk_cash_register" => $fk_cash_register, "fk_tax_rate" => $fk_tax_rate));
     }
+    public static function create_expense($description, $date, $amount, $fk_cash_register, $fk_tax_rate): bool
+    {
+        global $db;
+        return $db->insert('tbl_expenses', array("description" => $description, "date" => $date,
+            "amount" => $amount, "fk_cash_register" => $fk_cash_register, "fk_tax_rate" => $fk_tax_rate));
+    }
 
     public static function delete_revenue($id_revenue): bool
     {
         global $db;
         return $db->delete('tbl_revenues', array("id_revenue" => $id_revenue));
+    }
+
+    public static function delete_expense($id_expense): bool
+    {
+        global $db;
+        return $db->delete('tbl_expense', array("id_expense" => $id_expense));
     }
 
     public static function get_tax_rates(): array

@@ -57,12 +57,27 @@ $app->group('/api', function (RouteCollectorProxy $api) {
             $response->getBody()->write(json_encode(array("success" => $success)));
             return $response;
         })->setName('new-revenue');
+
         $revenue_api->post('/delete-revenue', function (Request $request, Response $response, $args){
             $id_revenue = $request->getParsedBody()['id_revenue'];
             $success = DBQuery::delete_revenue($id_revenue);
             $response->getBody()->write(json_encode(array("success" => $success)));
             return $response;
         })->setName('delete-revenue');
+
+        $revenue_api->post('/new-expense', function (Request $request, Response $response, $args) {
+            $data = $request->getParsedBody()['postData'];
+            $success = DBQuery::create_expense($data['description'], $data['date'],  $data['amount'],$data['id_cash_register'], $data['id_tax_rate']);
+            $response->getBody()->write(json_encode(array("success" => $success)));
+            return $response;
+        })->setName('new-expense');
+
+        $revenue_api->post('/delete-expense', function (Request $request, Response $response, $args){
+            $id_expense = $request->getParsedBody()['expense'];
+            $success = DBQuery::delete_revenue($id_expense);
+            $response->getBody()->write(json_encode(array("success" => $success)));
+            return $response;
+        })->setName('delete-expense');
     });
 
     $api->get('/db-init', function () {
