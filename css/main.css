@@ -7,3 +7,7 @@ th.center, td.center {
 td.currency {
     text-align: right;
 }
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}

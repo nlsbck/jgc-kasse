@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-4">
             <label for="description-input" class="form-label">Beschreibung</label>
-            <input class="form-control" id="description-input" placeholder="Beschreibung">
+            <input class="form-control" id="description-input" placeholder="Beschreibung" maxlength="50">
         </div>
         <div class="col-md-2">
             <label for="amount-input" class="form-label">Betrag</label>

@@ -8,11 +8,12 @@
 </head>
 
 <body>
-<h1 style="text-align: center">Startseite</h1>
+<h1 style="text-align: center">Ein- und Ausgaben</h1>
+<br>
 <div class="container">
     <div class="row">
         <div class="col">
-            <table class="table">
+            <table class="table w-auto center">
                 <thead>
                 <tr>
                     <th></th>
@@ -50,10 +51,10 @@
                         <?php if (substr($yearly_overview[$i]['date'], 5, 2) !== substr($yearly_overview[$i + 1]['date'], 5, 2)): ?>
                         <tr><td></td><td></td><td></td><td></td><td></td></tr>
                             <tr>
-                                <td>Monatssaldo <?= DateTime::createFromFormat('!m', substr($yearly_overview[$i]['date'], 5, 2))->format('F')?></td>
+                                <td>Monatssaldo <?= substr($yearly_overview[$i]['date'], 0, 7)?></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td class="currency"><?= $yearly_overview[$i]['sum_month'] ?> €</td>
                                 <td></td>
                             </tr>
                         <tr><td></td><td></td><td></td><td></td><td></td></tr>
