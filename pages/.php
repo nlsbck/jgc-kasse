@@ -1,5 +1,7 @@
 <?php
-/** @var array $yearly_overview */
+/** @var array $daily */
+/** @var array $daily */
+/** @var array $daily */
 ?>
 <head>
     <?php
@@ -18,46 +20,63 @@
                 <tr>
                     <th></th>
                     <th scope="col">Datum</th>
-                    <th class="center" scope="col">Beschreibung</th>
-                    <th>Betrag</th>
+                    <th class="center" scope="col">Zweck</th>
+                    <th>Ausgaben</th>
+                    <th>Einnahmen</th>
+                    <th>Saldo</th>
                     <th>Steuer</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php for ($i = 0; $i < count($yearly_overview); $i++): ?>
+                <?php for ($i = 0; $i < count($daily); $i++): ?>
                     <tr>
                         <td></td>
-                        <td><?= date('d.m.Y', strtotime($yearly_overview[$i]['date'])) ?></td>
-                        <td><?= $yearly_overview[$i]['revenue'] ?></td>
-                        <td class="currency"><?= $yearly_overview[$i]['amount'] ?> €</td>
-                        <td><?= $yearly_overview[$i]['tax'] ?></td>
+                        <td><?= date('d.m.Y', strtotime($daily[$i]['date'])) ?></td>
+                        <td><?= $daily[$i]['revenue'] ?></td>
+                        <?php if ($daily[$i]['prefix'] === '-'): ?>
+                            <td class="currency text-danger"><?=$daily[$i]['prefix'] . $daily[$i]['amount'] ?> €</td>
+                            <td></td>
+                        <?php else:?>
+                            <td></td>
+                            <td class="currency text-success"><?=$daily[$i]['prefix'] . $daily[$i]['amount'] ?> €</td>
+                        <?php endif?>
+                        <td></td>
+                        <td><?= $daily[$i]['tax'] ?></td>
                     </tr>
-                    <?php if ($i === count($yearly_overview) - 1): ?>
+                    <?php if ($i === count($daily) - 1): ?>
+                        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                         <tr>
-                            <td>Monatssaldo</td>
+                            <td><?= substr($daily[$i]['date'], 0, 7)?></td>
                             <td></td>
                             <td></td>
+                            <td class="currency"> €</td>
+                            <td class="currency"> €</td>
                             <td></td>
                             <td></td>
                         </tr>
+                        <tr><td></td><td></td><td><td></td><td></td></td><td></td><td></td></tr>
                         <tr>
-                            <td>Gesamtsaldo</td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td class="currency"> </td>
+                            <td class="currency"> €</td>
                             <td></td>
                             <td></td>
                         </tr>
                     <?php else: ?>
-                        <?php if (substr($yearly_overview[$i]['date'], 5, 2) !== substr($yearly_overview[$i + 1]['date'], 5, 2)): ?>
-                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <?php if ($daily[$i]['month'] !== $daily[$i + 1]['month']): ?>
+                        <tr><td></td><td></td><td><td></td><td></td></td><td></td><td></td></tr>
                             <tr>
-                                <td>Monatssaldo <?= substr($yearly_overview[$i]['date'], 0, 7)?></td>
+                                <td><?= substr($daily[$i]['date'], 0, 7)?></td>
                                 <td></td>
                                 <td></td>
-                                <td class="currency"><?= $yearly_overview[$i]['sum_month'] ?> €</td>
+                                <td class="currency"> €</td>
+                                <td class="currency"> €</td>
+                                <td></td>
                                 <td></td>
                             </tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td><td></td><td></td></td><td></td><td></td></tr>
                         <?php endif ?>
                     <?php endif ?>
                 <?php endfor ?>
@@ -68,12 +87,4 @@
 </div>
 </body>
 <script>
-    document.querySelectorAll('.currency').forEach(td => {
-        let value = td.innerText;
-        if (value < '0') {
-            td.classList.add('text-danger');
-        } else {
-            td.classList.add('text-success');
-        }
-    })
 </script>

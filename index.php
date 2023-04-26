@@ -14,7 +14,13 @@ require __DIR__ . '/vendor/autoload.php';
 require './config/database.php';
 require './config/server.php';
 
-$db = new DBConnection(DB_SERVER, DB_DATABASE, DB_USER, DB_PASSWORD);
+try {
+    $db = new DBConnection(DB_SERVER, DB_DATABASE, DB_USER, DB_PASSWORD);
+} catch (Exception) {
+    echo "<h1>Keine Verbindung zur Datenbank möglich</h1>";
+    exit;
+}
+
 
 
 

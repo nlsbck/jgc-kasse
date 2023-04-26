@@ -8,7 +8,10 @@ $renderer = new PhpRenderer('./pages/');
 
 $app->get('/', function ($request, $response, $args) {
     global $renderer;
-    $args['yearly_overview'] = DBQuery::get_yearly_overview('2023');
+    $year = date('Y');
+    $args['daily'] = DBQuery::get_yearly_overview($year);
+    $args['monthly_expenses'] = DBQuery::get_expenses_grouped_by_month($year);
+    $args['monthly_revenues'] = DBQuery::get_revenues_grouped_by_month($year);
     return $renderer->render($response, ".php", $args);
 })->setName('home');
 
