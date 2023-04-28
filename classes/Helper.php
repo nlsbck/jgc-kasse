@@ -12,6 +12,20 @@ class Helper
                return $ma['amount'];
            }
        }
-       return false;
+       return 0;
+   }
+
+   public static function sum_amounts(array $monthly_amounts, $year = '')
+   {
+       if ($year === '') {
+           $year = date('Y');
+       }
+       $sum = 0;
+       foreach ($monthly_amounts as $amount) {
+           if ($amount['year'] == $year) {
+               $sum += $amount['amount'];
+           }
+       }
+       return $sum;
    }
 }

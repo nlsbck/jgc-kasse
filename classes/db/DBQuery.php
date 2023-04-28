@@ -120,7 +120,7 @@ class DBQuery
         return $db->executeSelect("
         SELECT SUM(amount) AS amount,
            MONTH(date) AS month,
-            YEAR(date) AS YEAR
+            YEAR(date) AS year
         FROM tbl_revenues
         WHERE YEAR(date) like ?
         GROUP BY MONTH(date), YEAR(date)
@@ -133,7 +133,7 @@ class DBQuery
         return $db->executeSelect("
         SELECT SUM(amount) AS amount,
            MONTH(date) AS month,
-           YEAR(date) AS YEAR
+           YEAR(date) AS year
         FROM tbl_expenses
         WHERE YEAR(date) like ?
         GROUP BY MONTH(date), YEAR(date)
