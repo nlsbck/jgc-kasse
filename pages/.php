@@ -50,11 +50,10 @@ include 'classes/Helper.php';
                         <td><?= $daily[$i]['tax'] ?></td>
                     </tr>
                     <?php if ($i === count($daily) - 1):
-                    $expenses_year = Helper::sum_amounts($monthly_expenses);
-                    $revenues_year = Helper::sum_amounts($monthly_revenues);
-                    $saldo_year = $revenues_year - $expenses_year;
+                        $expenses_year = Helper::sum_amounts($monthly_expenses);
+                        $revenues_year = Helper::sum_amounts($monthly_revenues);
+                        $saldo_year = $revenues_year - $expenses_year;
                     ?>
-
                         <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                         <tr>
                             <td><?= substr($daily[$i]['date'], 0, 7)?></td>
@@ -82,8 +81,8 @@ include 'classes/Helper.php';
                                 <td><?= substr($daily[$i]['date'], 0, 7)?></td>
                                 <td></td>
                                 <td></td>
-                                <td class="currency text-danger"><?= $expenses_current_month === 0 ? 0 : "+" . $expenses_current_month?> €</td>
-                                <td class="currency text-success"><?= $revenues_current_month === 0 ? 0 : "-" . $revenues_current_month?> €</td>
+                                <td class="currency text-danger"><?= $expenses_current_month === 0 ? 0 : "-" . $expenses_current_month?> €</td>
+                                <td class="currency text-success"><?= $revenues_current_month === 0 ? 0 : "+" . $revenues_current_month?> €</td>
                                 <td class="currency <?= $saldo_current_month < 0 ? 'text-danger' : ($saldo_current_month > 0 ? 'text-success' : '') ?>"><?= $saldo_current_month > 0 ? '+' . $saldo_current_month : $saldo_current_month ?> €</td>
                                 <td></td>
                             </tr>

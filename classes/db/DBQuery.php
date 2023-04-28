@@ -146,7 +146,7 @@ class DBQuery
         return $db->executeSelect("
             SELECT r.id_revenue, cr.description AS cash_register,
        r.description AS revenue, r.date, '+' AS prefix, r.amount,
-       tr.description AS tax, amount*tr.tax_rate AS tax_to_pay,
+       tr.description AS tax, amount*tr.tax_rate AS tax_share,
        tr.tax_rate, MONTH(date) AS month
 FROM tbl_revenues r
          join tbl_cash_registers cr on r.fk_cash_register = cr.id_cash_register
@@ -157,7 +157,7 @@ UNION
 
 SELECT r.id_expense, cr.description AS cash_register,
        r.description AS expense, r.date, '-' AS prefix, r.amount,
-       tr.description AS tax, amount*tr.tax_rate AS tax_to_pay,
+       tr.description AS tax, amount*tr.tax_rate AS tax_share,
        tr.tax_rate, MONTH(date) AS month
 FROM tbl_expenses r
          join tbl_cash_registers cr on r.fk_cash_register = cr.id_cash_register
