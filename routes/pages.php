@@ -6,14 +6,16 @@ use Slim\Views\PhpRenderer;
 
 $renderer = new PhpRenderer('./pages/');
 
-$app->get('/', function ($request, $response, $args) {
+$app->redirect('/', 'overview/' . date('Y'), 301)->setName('home');
+
+$app->get('/overview/{year}', function ($request, $response, $args) {
     global $renderer;
-    $year = date('Y');
+    $year = $args['year'];
     $args['daily'] = DBQuery::get_yearly_overview($year);
     $args['monthly_expenses'] = DBQuery::get_expenses_grouped_by_month($year);
     $args['monthly_revenues'] = DBQuery::get_revenues_grouped_by_month($year);
     return $renderer->render($response, ".php", $args);
-})->setName('home');
+});
 
 $app->get('/cash-registers', function ($request, $response, $args){
     global $renderer;

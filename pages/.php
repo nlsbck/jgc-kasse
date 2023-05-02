@@ -2,6 +2,7 @@
 /** @var array $daily */
 /** @var array $monthly_expenses */
 /** @var array $monthly_revenues */
+/** @var array $year */
 include 'classes/Helper.php';
 ?>
 <head>
@@ -11,7 +12,7 @@ include 'classes/Helper.php';
 </head>
 
 <body>
-<h1 style="text-align: center">Ein- und Ausgaben <?= date('Y')?></h1>
+<h1 style="text-align: center">Ein- und Ausgaben <?= $year?></h1>
 <br>
 <div class="container">
     <div class="row">
@@ -31,8 +32,8 @@ include 'classes/Helper.php';
                 </thead>
                 <tbody>
                 <?php for ($i = 0; $i < count($daily); $i++):
-                    $revenues_current_month = Helper::get_amount_for_month($monthly_revenues, $daily[$i]['month'], date('Y'));
-                    $expenses_current_month = Helper::get_amount_for_month($monthly_expenses, $daily[$i]['month'], date('Y'));
+                    $revenues_current_month = Helper::get_amount_for_month($monthly_revenues, $daily[$i]['month'], $year);
+                    $expenses_current_month = Helper::get_amount_for_month($monthly_expenses, $daily[$i]['month'], $year);
                     $saldo_current_month = $revenues_current_month - $expenses_current_month;
                 ?>
 
@@ -52,8 +53,8 @@ include 'classes/Helper.php';
                         <td><?= $daily[$i]['tax'] ?></td>
                     </tr>
                     <?php if ($i === count($daily) - 1):
-                        $expenses_year = Helper::sum_amounts($monthly_expenses);
-                        $revenues_year = Helper::sum_amounts($monthly_revenues);
+                        $expenses_year = Helper::sum_amounts($monthly_expenses, $year);
+                        $revenues_year = Helper::sum_amounts($monthly_revenues, $year);
                         $saldo_year = $revenues_year - $expenses_year;
                     ?>
                         <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -69,7 +70,7 @@ include 'classes/Helper.php';
                         </tr>
                         <tr><td></td><td></td><td></td><td><td></td><td></td><td></td><td></td></tr>
                         <tr>
-                            <td><?= date('Y')?></td>
+                            <td><?= $year?></td>
                             <td></td>
                             <td></td>
                             <td></td>
