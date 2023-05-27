@@ -14,6 +14,7 @@ $app->get('/overview/{year}', function ($request, $response, $args) {
     $args['daily'] = DBQuery::get_yearly_overview($year);
     $args['monthly_expenses'] = DBQuery::get_expenses_grouped_by_month($year);
     $args['monthly_revenues'] = DBQuery::get_revenues_grouped_by_month($year);
+    $args['initial_cash_status'] = DBQuery::get_cash_status_last_year($year);
     return $renderer->render($response, ".php", $args);
 });
 

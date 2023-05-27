@@ -94,6 +94,16 @@ class DBQuery
         ");
     }
 
+    public static function get_cash_status_last_year($currentYear): array
+    {
+        global $db;
+        return $db->executeSelect("
+            select date, amount  from tbl_cash_status
+            where YEAR(date) < ?
+            and date = (select max(date) from tbl_cash_status where year(date) < ?)
+        ", $currentYear, $currentYear);
+    }
+
     public static function edit_initial_cash_status($id_cash_status, $date, $amount, $id_cash_register = '-1'): bool
     {
         global $db;

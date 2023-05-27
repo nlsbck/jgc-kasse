@@ -3,6 +3,7 @@
 /** @var array $monthly_expenses */
 /** @var array $monthly_revenues */
 /** @var array $year */
+/** @var array $initial_cash_status */
 include 'classes/Helper.php';
 ?>
 <head>
@@ -15,6 +16,11 @@ include 'classes/Helper.php';
 <h1 style="text-align: center">Ein- und Ausgaben <?= $year?></h1>
 <br>
 <div class="container">
+    <div class="row">
+        <div class="col">
+            <p>Kassenstand vom <?= date('d.m.Y', strtotime($initial_cash_status[0]['date']))?>: <?= $initial_cash_status[0]['amount']?> €</p>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <table class="table w-auto center">
@@ -57,6 +63,7 @@ include 'classes/Helper.php';
                         $revenues_year = Helper::sum_amounts($monthly_revenues, $year);
                         $saldo_year = $revenues_year - $expenses_year;
                     ?>
+                    <!-- End of the month -->
                         <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                         <tr>
                             <td><?= substr($daily[$i]['date'], 0, 7)?></td>
@@ -68,6 +75,7 @@ include 'classes/Helper.php';
                             <td class="currency <?= $saldo_current_month < 0 ? 'text-danger' : ($saldo_current_month > 0 ? 'text-success' : '') ?>"><?= $saldo_current_month > 0 ? '+' . $saldo_current_month : $saldo_current_month ?> €</td>
                             <td></td>
                         </tr>
+                    <!-- End of the year -->
                         <tr><td></td><td></td><td></td><td><td></td><td></td><td></td><td></td></tr>
                         <tr>
                             <td><?= $year?></td>
@@ -81,6 +89,7 @@ include 'classes/Helper.php';
                         </tr>
                     <?php else: ?>
                         <?php if ($daily[$i]['month'] !== $daily[$i + 1]['month']): ?>
+                        <!-- End of the month -->
                         <tr><td></td><td></td><td></td><td><td></td><td></td><td></td><td></td></tr>
                             <tr>
                                 <td><?= substr($daily[$i]['date'], 0, 7)?></td>
