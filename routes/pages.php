@@ -45,15 +45,14 @@ $app->get('/tax-rates', function ($request, $response, $args){
     return $renderer->render($response, "tax_rates.php", $args);
 })->setName('tax-rates');
 
+$app->redirect('/finalize', 'finalize/' . date('Y'), 301)->setName('finalize');
+
 $app->get('/finalize/{year}', function ($request, $response, $args){
-    $year = $args['year'];
     global $renderer;
+    $year = $args['year'];
+    $args['initial_cash_status'] = DBQuery::get_cash_status_last_year($year);
+    $args['monthly_expenses'] = DBQuery::get_expenses_grouped_by_month($year);
+    $args['monthly_revenues'] = DBQuery::get_revenues_grouped_by_month($year);
     return $renderer->render($response, "finalize.php", $args);
 });
 
-$app->get('/finalize', function ($request, $response, $args){
-    global $renderer;
-    $year = date('Y') - 1;
-    $args['year'] = $year;
-    return $renderer->render($response, "finalize.php", $args);
-})->setName('finalize');

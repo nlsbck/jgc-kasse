@@ -98,10 +98,11 @@ class DBQuery
     {
         global $db;
         return $db->executeSelect("
-            select date, amount  from tbl_cash_status
-            where YEAR(date) < ?
-            and date = (select max(date) from tbl_cash_status where year(date) < ?)
-        ", $currentYear, $currentYear);
+        select sum(amount) AS amount, max(date) AS date
+        from tbl_cash_status cs
+       where date IN (select max(date) from tbl_cash_status where year(date) < ? GROUP BY fk_cash_register)
+        
+        ", $currentYear);
     }
 
     public static function edit_initial_cash_status($id_cash_status, $date, $amount, $id_cash_register = '-1'): bool

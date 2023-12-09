@@ -4,7 +4,7 @@ th.center, td.center {
 .clickable {
     cursor: pointer;
 }
-td.currency {
+td.currency, p.currency {
     text-align: right;
 }
 .center {
