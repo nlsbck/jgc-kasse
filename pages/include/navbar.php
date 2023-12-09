@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= URI->getURI('revenues') ?>">Umsätze</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= URI->getURI('finalize') ?>">Abschluss</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">

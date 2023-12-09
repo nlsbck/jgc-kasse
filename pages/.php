@@ -44,7 +44,6 @@ include 'classes/Helper.php';
                     $tax_to_pay_currten_month = Helper::get_tax_for_month($monthly_revenues, $daily[$i]['month'], $year);
                     $saldo_current_month = $revenues_current_month - $expenses_current_month;
                 ?>
-
                     <tr>
                         <td></td>
                         <td><?= date('d.m.Y', strtotime($daily[$i]['date'])) ?></td>

@@ -44,3 +44,16 @@ $app->get('/tax-rates', function ($request, $response, $args){
     //$args['initial_cash_status'] = DBQuery::initial_cash_status();
     return $renderer->render($response, "tax_rates.php", $args);
 })->setName('tax-rates');
+
+$app->get('/finalize/{year}', function ($request, $response, $args){
+    $year = $args['year'];
+    global $renderer;
+    return $renderer->render($response, "finalize.php", $args);
+});
+
+$app->get('/finalize', function ($request, $response, $args){
+    global $renderer;
+    $year = date('Y') - 1;
+    $args['year'] = $year;
+    return $renderer->render($response, "finalize.php", $args);
+})->setName('finalize');
