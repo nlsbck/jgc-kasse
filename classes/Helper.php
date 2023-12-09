@@ -15,6 +15,20 @@ class Helper
        return 0;
    }
 
+   
+   public static function get_tax_for_month(array $monthly_tax, $month, $year = '')
+   {
+       if ($year === '') {
+           $year = date('Y');
+       }
+       foreach ($monthly_tax as $ma) {
+           if ($ma['month'] === $month) {
+               return $ma['tax'];
+           }
+       }
+       return 0;
+   }
+
    public static function sum_amounts(array $monthly_amounts, $year = '')
    {
        if ($year === '') {

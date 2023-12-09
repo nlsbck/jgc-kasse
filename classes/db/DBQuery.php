@@ -130,8 +130,10 @@ class DBQuery
         return $db->executeSelect("
         SELECT SUM(amount) AS amount,
            MONTH(date) AS month,
-            YEAR(date) AS year
-        FROM tbl_revenues
+            YEAR(date) AS year,
+            SUM(amount * tr.tax_rate) AS tax
+        FROM tbl_revenues r
+        join tbl_tax_rates tr ON r.fk_tax_rate = tr.id_tax_rate
         WHERE YEAR(date) like ?
         GROUP BY MONTH(date), YEAR(date)
         ", $year);
@@ -143,8 +145,10 @@ class DBQuery
         return $db->executeSelect("
         SELECT SUM(amount) AS amount,
            MONTH(date) AS month,
-           YEAR(date) AS year
-        FROM tbl_expenses
+           YEAR(date) AS year,
+           SUM(amount * (tr.tax_rate / 1 + tr.tax_rate)) AS tax
+        FROM tbl_expenses e 
+        join tbl_tax_rates tr on e.fk_tax_rate = tr.id_tax_rate
         WHERE YEAR(date) like ?
         GROUP BY MONTH(date), YEAR(date)
         ", $year);
