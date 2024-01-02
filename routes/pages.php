@@ -32,9 +32,9 @@ $app->get('/revenues', function ($request, $response, $args){
     return $renderer->render($response, "revenues.php", $args);
 })->setName('revenues');
 
-$app->get('/initial-cash-status', function ($request, $response, $args){
+$app->get('/cash-status', function ($request, $response, $args){
     global $renderer;
-    $args['initial_cash_status'] = DBQuery::initial_cash_status();
+    $args['initial_cash_status'] = DBQuery::cash_status();
     return $renderer->render($response, "initial_cash_status.php", $args);
 })->setName('initial-cash-status');
 

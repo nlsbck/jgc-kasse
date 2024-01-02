@@ -32,7 +32,7 @@ require 'pages/include/head.php';
                         <td class="center clickable" onclick="editModal('<?= $ics['id_cash_register']?>')">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </td>
-                        <td class="center clickable" onclick="deleteCashStatus('<?= $ics['id_cash_register']?>')">
+                        <td class="center clickable" onclick="deleteCashStatus('<?= $ics['id_cash_status']?>')">
                             <i class="fa-solid fa-trash-can"></i>
                         </td>
                     </tr>
@@ -86,7 +86,14 @@ require 'pages/include/head.php';
     }
 
     function deleteCashStatus(id_cash_status) {
+        $.ajax({
+            method: "POST",
+            url: '<?= URI->getURI('delete-cash-status')?>',
+            data: {id_cash_status: id_cash_status },
+            success: function() {
 
+            }
+        })
     }
 
     function editCashStatus(id_cash_register) {

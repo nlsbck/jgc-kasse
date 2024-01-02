@@ -30,6 +30,13 @@ $app->group('/api', function (RouteCollectorProxy $api) {
             return $response;
         })->setName('edit-cash-status');
 
+        $cr_api->post('delete-cash-status', function (Request $request, Response $response, $args) {
+            $id_cash_status = $request->getParsedBody()['id_cash_status'];
+            $success = DBQuery::delete_cash_status($id_cash_status);
+            $response->getBody()->write(json_encode(array("success" => $success)));
+            return $response;
+        })->setName('delete-cash-status');
+
         $cr_api->post('/delete-tax-rate', function (Request $request, Response $response, $args){
             $id_tax_rate = $request->getParsedBody()['id_tax_rate'];
             if (DBQuery::get_revenues_with_tax_rate($id_tax_rate) > 0) {
